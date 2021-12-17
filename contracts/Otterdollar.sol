@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract OtterDollar is ERC20, Ownable {
     uint gameplayAmount = 0.025 ether;
+    
 
     constructor() ERC20("OtterDollar", "OTD") {
     }
