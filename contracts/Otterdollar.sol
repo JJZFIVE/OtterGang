@@ -4,7 +4,7 @@ pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract OtterDollar is ERC20, Ownable {
+contract Otterdollar is ERC20, Ownable {
     uint gameplayAmount = 0.025 ether;
     
 

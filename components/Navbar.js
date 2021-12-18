@@ -56,6 +56,11 @@ export default function Navbar() {
                 <button>About</button>
               </li>
             </Link>
+            <Link href="/create-nft">
+              <li>
+                <button>N</button>
+              </li>
+            </Link>
           </ul>
         </div>
         <div className="flex items-center pr-10">
