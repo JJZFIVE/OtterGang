@@ -51,6 +51,11 @@ export default function Navbar() {
                 <button>My Otters</button>
               </li>
             </Link>
+            <Link href="/about">
+              <li>
+                <button>About</button>
+              </li>
+            </Link>
           </ul>
         </div>
         <div className="flex items-center pr-10">
