@@ -1,19 +1,25 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
-describe("Greeter", function () {
+describe("All Tests", function () {
   it("Should return the new greeting once it's changed", async function () {
-    const Greeter = await ethers.getContractFactory("Greeter");
-    const greeter = await Greeter.deploy("Hello, world!");
-    await greeter.deployed();
+    const Otterdollar = await ethers.getContractFactory("Otterdollar");
+    const otterdollar = await Otterdollar.deploy();
+    await otterdollar.deployed();
+    //console.log("OtterDollar deployed to:", otterdollar.address);
 
-    expect(await greeter.greet()).to.equal("Hello, world!");
+    const Marketplace = await ethers.getContractFactory("Marketplace");
+    const marketplace = await Marketplace.deploy(otterdollar.address);
+    await marketplace.deployed();
+    //console.log("Marketplace deployed to:", marketplace.address);
 
-    const setGreetingTx = await greeter.setGreeting("Hola, mundo!");
+    const NFT = await ethers.getContractFactory("NFT");
+    const nft = await NFT.deploy(marketplace.address);
+    await nft.deployed();
+    // console.log("NFT deployed to:", nft.address);
 
-    // wait until the transaction is mined
-    await setGreetingTx.wait();
-
-    expect(await greeter.greet()).to.equal("Hola, mundo!");
+    // console.log(await otterdollar.playGame(5));
+    // console.log(await marketplace.fetchAllUnsold());
+    expect(1).to.equal(1);
   });
 });

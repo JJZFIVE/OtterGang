@@ -15,33 +15,37 @@ import NFTABI from "../artifacts/contracts/NFT.sol/NFT.json";
 import MarketplaceABI from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
 
 export default function CreateNFT() {
-  const { account, activate, active, library, deactivate } = useWeb3React();
+  const { account, active, library } = useWeb3React();
   const [tokenURI, setTokenURI] = useState("");
   const [tokenId, setTokenId] = useState();
 
-  async function createNFT() {
-    if (!active) {
-      console.log(tokenURI, "Not signed in");
-      return;
-    }
-    const signer = library.getSigner();
-    console.log(library);
-    console.log(signer);
+  const createNFT = async () => {
+    // if (!active) {
+    //   console.log(tokenURI, "Not signed in");
+    //   return;
+    // }
+    try {
+      const signer = library.getSigner();
+      console.log(library);
+      console.log(signer);
 
-    const nftContract = new ethers.Contract(
-      nftcontractaddress,
-      NFTABI.abi,
-      signer
-    );
-    const tx = await nftContract.createToken(tokenURI);
-    console.log("Transaction", tx);
-  }
+      const nftContract = new ethers.Contract(
+        nftcontractaddress,
+        NFTABI.abi,
+        signer
+      );
+      const tx = await nftContract.createToken(tokenURI);
+      console.log("Transaction", tx);
+    } catch (ex) {
+      console.log(ex);
+    }
+  };
 
   async function createMarketItem() {
-    if (!active) {
-      console.log(tokenId, "Not signed in");
-      return;
-    }
+    // if (!active) {
+    //   console.log(tokenId, "Not signed in");
+    //   return;
+    // }
     const signer = library.getSigner();
 
     console.log(signer);
@@ -79,7 +83,7 @@ export default function CreateNFT() {
         ></input>
         <button onClick={createMarketItem}>Create Market Item</button>
       </form>
-      <p>{active ? library._isProvider : <p>Didnt work</p>}</p>
+      {active ? <p>{account}</p> : <p>Didnt work</p>}
     </div>
   );
 }

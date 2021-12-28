@@ -20,24 +20,30 @@ export function RockButton(props) {
         signer
       );
 
-      const result = await otterDollar.playGame(0);
-      console.log(result);
-      props.setPlayed(true);
-      // find a way to get if you won
-      if (result == 0) {
-        props.setResult(0);
-      } else if (result == 1) {
-        props.setResult(1);
-      } else {
-        props.setResult(2);
-      }
+      //otterDollar.off("GamePlayed");
+      // Or otterDollar.removeAllListeners
+
+      otterDollar.removeAllListeners("GamePlayed");
+
+      otterDollar.once("GamePlayed", (gameReturnValue) => {
+        console.log("Game Return Value:", parseInt(gameReturnValue));
+        console.log("Game Return Value in BigNumber:", gameReturnValue);
+        let res = parseInt(gameReturnValue);
+        console.log("Res", res);
+        props.setResult(res);
+        props.setPlayed(true);
+      });
+      const tx = await otterDollar.playGame(0, {
+        value: ethers.utils.parseEther("0.025"),
+      });
+      await tx.wait();
     } catch (ex) {
       console.log(ex);
     }
   };
 
   return (
-    <button>
+    <button onClick={playRock}>
       <Image src={rocklogo} height="200" width="200"></Image>
     </button>
   );
@@ -55,24 +61,30 @@ export function PaperButton(props) {
         signer
       );
 
-      const result = await otterDollar.playGame(1);
-      console.log(result);
-      props.setPlayed(true);
-      // find a way to get if you won
-      if (result == 0) {
-        props.setResult(0);
-      } else if (result == 1) {
-        props.setResult(1);
-      } else {
-        props.setResult(2);
-      }
+      //otterDollar.off("GamePlayed");
+      // Or otterDollar.removeAllListeners
+
+      otterDollar.removeAllListeners("GamePlayed");
+
+      otterDollar.once("GamePlayed", (gameReturnValue) => {
+        console.log("Game Return Value:", parseInt(gameReturnValue));
+        console.log("Game Return Value in BigNumber:", gameReturnValue);
+        let res = parseInt(gameReturnValue);
+        console.log("Res", res);
+        props.setResult(res);
+        props.setPlayed(true);
+      });
+      const tx = await otterDollar.playGame(1, {
+        value: ethers.utils.parseEther("0.025"),
+      });
+      await tx.wait();
     } catch (ex) {
       console.log(ex);
     }
   };
 
   return (
-    <button>
+    <button onClick={playPaper}>
       <Image src={paperlogo} height="200" width="200"></Image>
     </button>
   );
@@ -90,24 +102,30 @@ export function ScissorsButton(props) {
         signer
       );
 
-      const result = await otterDollar.playGame(2);
-      console.log(result);
-      props.setPlayed(true);
-      // find a way to get if you won
-      if (result == 0) {
-        props.setResult(0);
-      } else if (result == 1) {
-        props.setResult(1);
-      } else {
-        props.setResult(2);
-      }
+      //otterDollar.off("GamePlayed");
+      // Or otterDollar.removeAllListeners
+
+      otterDollar.removeAllListeners("GamePlayed");
+
+      otterDollar.once("GamePlayed", (gameReturnValue) => {
+        console.log("Game Return Value:", parseInt(gameReturnValue));
+        console.log("Game Return Value in BigNumber:", gameReturnValue);
+        let res = parseInt(gameReturnValue);
+        console.log("Res", res);
+        props.setResult(res);
+        props.setPlayed(true);
+      });
+      const tx = await otterDollar.playGame(2, {
+        value: ethers.utils.parseEther("0.025"),
+      });
+      await tx.wait();
     } catch (ex) {
       console.log(ex);
     }
   };
 
   return (
-    <button>
+    <button onClick={playScissors}>
       <Image src={scissorslogo} height="200" width="200"></Image>
     </button>
   );

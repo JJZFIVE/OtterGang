@@ -4,10 +4,13 @@ pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Otterdollar is ERC20, Ownable {
+contract OtterDollar is ERC20, Ownable {
     uint gameplayAmount = 0.025 ether;
-    
 
+    event GamePlayed (
+        uint indexed gameReturnValue
+    );
+    
     constructor() ERC20("OtterDollar", "OTD") {
     }
 
@@ -15,22 +18,26 @@ contract Otterdollar is ERC20, Ownable {
         gameplayAmount = _amount;
     }
 
+    function testMint(uint _amount) public {
+        _mint(msg.sender, _amount);
+    }
+
     // 0 = rock, 1 = paper, 2 = scissors
     // 0 = loss, 1 = win, 2 = tie
-    function playGame(uint _playerDecision) external payable returns (uint) {
+    function playGame(uint _playerDecision) external payable {
         require(msg.value == gameplayAmount, "Msg value is not the required gameplay amount");
         uint256 opponentDecision = uint256(keccak256(abi.encodePacked(block.difficulty, block.timestamp))) % 3;
         uint gameResult = wonGame(_playerDecision, opponentDecision);
         payable(owner()).transfer(msg.value);
         if (gameResult == 1) {
             _mint(msg.sender, 1);
-            return 1;
+            emit GamePlayed(1);
         }
         else if (gameResult == 0) {
-            return 0;
+            emit GamePlayed(0);
         }
         else {
-            return 2;
+            emit GamePlayed(2);
         }
     }
 

@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ethers } from "ethers";
 import { useWeb3React } from "@web3-react/core";
+import axios from "axios";
 
 import { otterdollarcontractaddress } from "../.config";
 import { marketcontractaddress } from "../.config";
@@ -27,6 +28,17 @@ export default function Marketplace() {
   }, []);
 
   async function loadNFTs() {
+    // const dic_net = {
+    //   name: "maticmum",
+    //   chainId: 80001,
+    //   _defaultProvider: (providers) =>
+    //     new providers.JsonRpcProvider(
+    //       `https://polygon-mumbai.infura.io/v3/${projectId}`
+    //     ),
+    // };
+
+    // const provider = ethers.getDefaultProvider(dic_net);
+
     const provider = new ethers.providers.JsonRpcProvider(
       // Mumbai
       `https://polygon-mumbai.infura.io/v3/${projectId}`
@@ -50,8 +62,13 @@ export default function Marketplace() {
     const items = await Promise.all(
       data.map(async (i) => {
         const tokenUri = await nftContract.tokenURI(i.tokenId);
-        const meta = await fetch(tokenUri);
-        let price = ethers.utils.formatUnits(i.price.toString(), "ether");
+        const meta = await axios.get(tokenUri);
+        let price;
+        {
+          i.soldForOtterDollars
+            ? (price = ethers.utils.formatUnits(i.price.toString(), "ether"))
+            : (price = ethers.utils.formatUnits(i.price.toString(), "wei"));
+        }
         let item = {
           price,
           tokenId: i.tokenId.toNumber(),
@@ -81,9 +98,15 @@ export default function Marketplace() {
             <div key={i} className="border shadow rounded-xl overflow-hidden">
               <img src={nft.image} className="rounded" />
               <div className="p-4 bg-black">
-                <p className="text-2xl font-bold text-white">
-                  Price - {nft.price} Matic
-                </p>
+                {i.soldForOtterDollars ? (
+                  <p className="text-2xl font-bold text-white">
+                    Price: {nft.price} Matic
+                  </p>
+                ) : (
+                  <p className="text-2xl font-bold text-white">
+                    Price: {nft.price} OtterDollars
+                  </p>
+                )}
               </div>
             </div>
           ))}

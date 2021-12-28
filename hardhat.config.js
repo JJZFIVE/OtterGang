@@ -17,5 +17,9 @@ module.exports = {
       url: `https://polygon-mumbai.infura.io/v3/${projectId}`,
       accounts: [privateKey],
     },
+    rinkeby: {
+      url: `https://rinkeby.infura.io/v3/${projectId}`,
+      accounts: [privateKey],
+    },
   },
 };
