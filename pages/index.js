@@ -1,8 +1,7 @@
-import { useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import PlayButton from "../components/buttons/PlayButton";
 import ExploreButton from "../components/buttons/ExploreButton";
+import AboutButton from "../components/buttons/AboutButton";
 
 import pixelotter1 from "../public/pixelotter1.png";
 
@@ -17,9 +16,10 @@ export default function Home() {
             otters
           </p>
         </div>
-        <div className="mt-20 flex justify-between w-2/3">
+        <div className="mt-20 flex justify-between w-full">
           <PlayButton />
           <ExploreButton />
+          <AboutButton />
         </div>
       </div>
       <div className="mr-40 ">
