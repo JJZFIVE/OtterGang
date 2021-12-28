@@ -3,20 +3,9 @@ import { useState, useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 
 export default function ConnectButton() {
-  const {
-    account,
-    activate,
-    active,
-    chainId,
-    connector,
-    library,
-    deactivate,
-    error,
-    provider,
-    setError,
-  } = useWeb3React();
+  const { account, activate, active } = useWeb3React();
+  const [buttontext, setButtontext] = useState();
 
-  const [buttontext, setButtontext] = useState("Connect to MetaMask");
   async function connect() {
     try {
       await activate(injected);
@@ -27,7 +16,6 @@ export default function ConnectButton() {
 
   useEffect(() => {
     try {
-      // Fix account render bug, have to click it a few times to update
       let acc = account;
       setButtontext(
         acc.substring(0, 5) + "..." + acc.substring(acc.length - 5, acc.length)

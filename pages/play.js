@@ -61,7 +61,6 @@ export default function Play() {
         return (
           <div className="flex flex-col items-center font-mono text-xl mt-20">
             <p>You tied...</p>
-            <p>Result: {result}</p>
             <PlayAgain setPlayed={setPlayed} />
           </div>
         );

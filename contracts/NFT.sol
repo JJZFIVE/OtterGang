@@ -12,7 +12,11 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract NFT is ERC721URIStorage, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
-    address marketplaceAddress;
+    address public marketplaceAddress;
+
+    event NFTCreated (
+        uint indexed tokenId
+    );
 
     constructor(address _marketplaceAddress) ERC721("OtterGang", "OTTER") {
         marketplaceAddress = _marketplaceAddress;
@@ -24,6 +28,7 @@ contract NFT is ERC721URIStorage, Ownable {
         _safeMint(owner(), tokenId);
         _setTokenURI(tokenId, tokenURI);
         setApprovalForAll(marketplaceAddress, true);
+        emit NFTCreated(tokenId);
         return tokenId;
     }
 }

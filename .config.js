@@ -7,7 +7,7 @@
 
 // Mumbai:
 export const otterdollarcontractaddress =
-  "0x9c92759DB1986B1b2F6E8Adc14E673F2C3515013";
+  "0x40aa1c5B91863BE5f3519921e01521EC434fac91";
 export const marketcontractaddress =
-  "0xd77E4c1E67cF3d9800815e7df1AaaDD8E6042986";
-export const nftcontractaddress = "0x0E8c698047458d1d9b902FC8E919bF9D85277B05";
+  "0xEa1f2e38AD8B80e8126AD84A681BEAB36e797f16";
+export const nftcontractaddress = "0xEFB8363B5DB45C10094F8404b4cb41BF1160a8a9";

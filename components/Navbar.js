@@ -58,7 +58,7 @@ export default function Navbar() {
             </Link>
             <Link href="/create-nft">
               <li>
-                <button>N</button>
+                <button>C</button>
               </li>
             </Link>
           </ul>

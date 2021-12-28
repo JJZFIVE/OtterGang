@@ -119,6 +119,7 @@ export function ScissorsButton(props) {
         value: ethers.utils.parseEther("0.025"),
       });
       await tx.wait();
+      console.log("Transaction:", tx);
     } catch (ex) {
       console.log(ex);
     }
