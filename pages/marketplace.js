@@ -5,13 +5,11 @@ import axios from "axios";
 import BuyMaticButton from "../components/buttons/BuyMaticButton";
 import BuyOtterDollarButton from "../components/buttons/BuyOtterDollarButton";
 
-import { otterdollarcontractaddress } from "../.config";
 import { marketcontractaddress } from "../.config";
 import { nftcontractaddress } from "../.config";
 
 import { projectId } from "../.secret";
 
-import OtterdollarABI from "../artifacts/contracts/Otterdollar.sol/Otterdollar.json";
 import NFTABI from "../artifacts/contracts/NFT.sol/NFT.json";
 import MarketplaceABI from "../artifacts/contracts/Marketplace.sol/Marketplace.json";
 
@@ -28,17 +26,6 @@ export default function Marketplace() {
   }, []);
 
   async function loadNFTs() {
-    // const dic_net = {
-    //   name: "maticmum",
-    //   chainId: 80001,
-    //   _defaultProvider: (providers) =>
-    //     new providers.JsonRpcProvider(
-    //       `https://polygon-mumbai.infura.io/v3/${projectId}`
-    //     ),
-    // };
-
-    // const provider = ethers.getDefaultProvider(dic_net);
-
     const provider = new ethers.providers.JsonRpcProvider(
       // Mumbai
       `https://polygon-mumbai.infura.io/v3/${projectId}`
