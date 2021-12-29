@@ -25,11 +25,11 @@ export default function About() {
           </p>
         </div>
       </div>
-      <div className="mr-40">
+      <div className="mr-28 items-center flex">
         <Image
           src={otter1}
-          height="300"
-          width="300"
+          height="350"
+          width="350"
           className="rounded-2xl"
         ></Image>
       </div>

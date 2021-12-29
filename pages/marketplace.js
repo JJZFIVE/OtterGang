@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import { ethers } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 import axios from "axios";
+import BuyMaticButton from "../components/buttons/BuyMaticButton";
+import BuyOtterDollarButton from "../components/buttons/BuyOtterDollarButton";
 
 import { otterdollarcontractaddress } from "../.config";
 import { marketcontractaddress } from "../.config";
@@ -66,11 +66,12 @@ export default function Marketplace() {
         let price;
         {
           i.soldForOtterDollars
-            ? (price = ethers.utils.formatUnits(i.price.toString(), "ether"))
-            : (price = ethers.utils.formatUnits(i.price.toString(), "wei"));
+            ? (price = ethers.utils.formatUnits(i.price.toString(), "wei"))
+            : (price = ethers.utils.formatUnits(i.price.toString(), "wei")); // Ultimately change to ether
         }
         let item = {
           price,
+          itemId: i.itemId.toNumber(),
           tokenId: i.tokenId.toNumber(),
           seller: i.seller,
           owner: i.owner,
@@ -90,22 +91,43 @@ export default function Marketplace() {
 
   return (
     <div>
-      <p>Marketplace</p>
       <div className="p-4">
-        <h2 className="text-2xl py-2">Items Created</h2>
+        <h2 className="text-3xl py-2 flex justify-center">Items Created</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
           {nfts.map((nft, i) => (
-            <div key={i} className="border shadow rounded-xl overflow-hidden">
-              <img src={nft.image} className="rounded" />
-              <div className="p-4 bg-black">
-                {i.soldForOtterDollars ? (
-                  <p className="text-2xl font-bold text-white">
-                    Price: {nft.price} Matic
-                  </p>
+            <div
+              key={i}
+              className="border shadow rounded-xl overflow-hidden max-h-96"
+            >
+              <img
+                src={nft.image}
+                className="rounded rounded-b-none h-72"
+                width="100%"
+                height="100%"
+              />
+              <div className="p-4 text-center bg-yellow-700">
+                {nft.soldForOtterDollars ? (
+                  <div>
+                    <p className="text-2xl font-bold text-gray-200">
+                      Price: {nft.price} Matic
+                    </p>
+                    {active ? (
+                      <BuyMaticButton nft={nft} />
+                    ) : (
+                      <p className="text-gray-300">Connect Wallet to Buy</p>
+                    )}
+                  </div>
                 ) : (
-                  <p className="text-2xl font-bold text-white">
-                    Price: {nft.price} OtterDollars
-                  </p>
+                  <div>
+                    <p className="text-2xl font-bold text-gray-200">
+                      Price: {nft.price} OtterDollars
+                    </p>
+                    {active ? (
+                      <BuyOtterDollarButton nft={nft} />
+                    ) : (
+                      <p className="text-gray-300">Connect Wallet to Buy</p>
+                    )}
+                  </div>
                 )}
               </div>
             </div>

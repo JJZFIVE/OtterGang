@@ -30,7 +30,7 @@ contract OtterDollar is ERC20, Ownable {
         uint gameResult = wonGame(_playerDecision, opponentDecision);
         payable(owner()).transfer(msg.value);
         if (gameResult == 1) {
-            _mint(msg.sender, 1);
+            _mint(msg.sender, 1 * 10 ** decimals());
             emit GamePlayed(1);
         }
         else if (gameResult == 0) {

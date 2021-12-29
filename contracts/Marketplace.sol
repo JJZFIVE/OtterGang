@@ -46,6 +46,7 @@ contract Marketplace is ReentrancyGuard, Ownable {
     function createMarketItemForOtterDollars(address _nftAddress, uint _otterDollarPrice, uint _tokenId) public onlyOwner {
         require(_otterDollarPrice > 0, "Price must be 1 or more OtterDollars");
         require(_nftAddress != address(0), "Nft address cannot be the zero address");
+        _otterDollarPrice *= 10 ** 18; // Maybe update this in future to connect to decimals() from ERC20
         tokenIdToSoldForOtterDollars[_tokenId] = false;
         _itemIds.increment();
         uint itemId = _itemIds.current();
@@ -64,12 +65,11 @@ contract Marketplace is ReentrancyGuard, Ownable {
         idToMarketItem[itemId] = MarketItem(itemId, _nftAddress, _tokenId, _price, payable(msg.sender), payable(address(0)), false, true);
         emit MarketItemCreated(itemId, _nftAddress, _tokenId, _price, msg.sender, address(0), false, true);
         IERC721(_nftAddress).transferFrom(msg.sender, address(this), _tokenId);
-        
     }
 
     // First need to call approve for OtterDollar contract so that this contract can transfer tokens
     function buyWithOtterDollars(uint _itemId) public nonReentrant returns (uint)  {
-        MarketItem memory item = idToMarketItem[_itemId];
+        MarketItem storage item = idToMarketItem[_itemId];
         uint price = item.price;
         address nftAddress = item.nftAddress;
         require(item.soldForOtterDollars == false, "Item has already been sold for OtterDollars");
@@ -85,7 +85,7 @@ contract Marketplace is ReentrancyGuard, Ownable {
     }
 
     function buyNormal(uint _itemId) payable public nonReentrant returns(uint)  {
-        MarketItem memory item = idToMarketItem[_itemId];
+        MarketItem storage item = idToMarketItem[_itemId];
         uint price = item.price;
         uint tokenId = item.tokenId;
         require(item.soldForOtterDollars == true, "Item has not been sold for OtterDollars yet");

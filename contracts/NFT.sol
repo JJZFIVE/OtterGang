@@ -22,7 +22,7 @@ contract NFT is ERC721URIStorage, Ownable {
         marketplaceAddress = _marketplaceAddress;
     }
 
-    function createToken(string memory tokenURI) external onlyOwner returns (uint) {
+    function createToken(string calldata tokenURI) external onlyOwner returns (uint) {
         _tokenIds.increment();
         uint tokenId = _tokenIds.current();
         _safeMint(owner(), tokenId);
